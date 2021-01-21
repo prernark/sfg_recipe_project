@@ -9,7 +9,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String catgName;
+    private String description;
 
     //Need to give mappedBy so only 1 join table created. The String should be the property name in Recipe obj.
     @ManyToMany(mappedBy = "categorySet")
@@ -23,12 +23,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getCatgName() {
-        return catgName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCatgName(String catgName) {
-        this.catgName = catgName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Recipe> getRecipeSet() {
