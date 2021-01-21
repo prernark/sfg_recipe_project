@@ -1,5 +1,7 @@
 package guru.springframework5.sfg_recipe_project.domain;
 
+import guru.springframework5.sfg_recipe_project.enums.Difficulty;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,7 +18,9 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-//    private Difficulty difficulty;
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
+
     @Lob //on the db we store it as a BLoB
     private Byte[] image;
     //Below,1 Recipe has many Ingredients and cascade to make Recipe the owner.
@@ -25,6 +29,11 @@ public class Recipe {
     private Set<Ingredient> ingredientSet;
     @OneToOne(cascade= CascadeType.ALL) //Each recipe has one note and set up a cascade by making recipe the owner of that.
     private Notes notes;
+    @ManyToMany
+    @JoinTable (name="recipe_category",
+                joinColumns = @JoinColumn (name="recipe_id"),
+                inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<Category> categorySet;
 
 
     public Long getId() {
@@ -91,6 +100,14 @@ public class Recipe {
         this.directions = directions;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public Byte[] getImage() {
         return image;
     }
@@ -113,5 +130,13 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Category> getCategorySet() {
+        return categorySet;
+    }
+
+    public void setCategorySet(Set<Category> categorySet) {
+        this.categorySet = categorySet;
     }
 }
