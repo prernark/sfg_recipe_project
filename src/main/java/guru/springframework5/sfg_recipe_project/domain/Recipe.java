@@ -130,8 +130,17 @@ public class Recipe {
         return notes;
     }
 
+    //Dont just set Notes but ensure bidirectional save as well. So save recipe in the notes at the same time
     public void setNotes(Notes notes) {
         this.notes = notes;
+        notes.setRecipe(this);
+    }
+
+    //Also when creating recipe, save the ingredients at the same time. Bidirectional taken care of
+    public Recipe addIngredients(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredientSet.add(ingredient);
+        return this;
     }
 
     public Set<Category> getCategorySet() {

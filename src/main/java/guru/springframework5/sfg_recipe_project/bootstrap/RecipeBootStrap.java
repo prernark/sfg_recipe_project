@@ -88,22 +88,25 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
                 "\n" +
                 "4 Serve: Serve immediately, or if making a few hours ahead, place plastic wrap on the surface of the guacamole and press down to cover it and to prevent air reaching it. (The oxygen in the air causes oxidation which will turn the guacamole brown.) Refrigerate until ready to serve.");
 
-
-        guacRecipe.getIngredientSet().add(new Ingredient("ripe avocados", new BigDecimal(2), uomNumber.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("salt, more to taste", new BigDecimal(0.25), uomTsp.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1), uomTbsp.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), uomTbsp.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), uomNumber.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2), uomTbsp.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("of freshly grated black pepper", new BigDecimal(1), uomDash.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(0.5), uomNumber.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("Red radishes or jicama, to garnish", new BigDecimal(0), uomNumber.get(), guacRecipe));
-        guacRecipe.getIngredientSet().add(new Ingredient("Tortilla chips, to serve", new BigDecimal(0), uomNumber.get(), guacRecipe));
+//Changed all below to call the new helper method addIngredients which takes care of bidirectional relationship and makes this code simpler
+//        guacRecipe.getIngredientSet().add(new Ingredient("salt, more to taste", new BigDecimal(0.25), uomTsp.get(), guacRecipe));
+        guacRecipe.addIngredients(new Ingredient("ripe avocados", new BigDecimal(2), uomNumber.get()));
+        guacRecipe.addIngredients(new Ingredient("salt, more to taste", new BigDecimal(0.25), uomTsp.get()));
+        guacRecipe.addIngredients(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(1), uomTbsp.get()));
+        guacRecipe.addIngredients(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), uomTbsp.get()));
+        guacRecipe.addIngredients(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), uomNumber.get()));
+        guacRecipe.addIngredients(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal(2), uomTbsp.get()));
+        guacRecipe.addIngredients(new Ingredient("of freshly grated black pepper", new BigDecimal(1), uomDash.get()));
+        guacRecipe.addIngredients(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(0.5), uomNumber.get()));
+        guacRecipe.addIngredients(new Ingredient("Red radishes or jicama, to garnish", new BigDecimal(0), uomNumber.get()));
+        guacRecipe.addIngredients(new Ingredient("Tortilla chips, to serve", new BigDecimal(0), uomNumber.get()));
 
         guacRecipe.getCategorySet().add(catgAmerican.get());
         guacRecipe.getCategorySet().add(catgMexican.get());
 
-        guacNotes.setRecipe(guacRecipe);
+        //Below not needed after sorting out bidirectional save in Recipe
+//        guacNotes.setRecipe(guacRecipe);
+
         //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
         Notes tacoNotes = new Notes();
@@ -145,22 +148,24 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
                 "\n" +
                 "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges.");
 
-
-        tacoRecipe.getIngredientSet().add(new Ingredient("ancho chili powder", new BigDecimal(2), uomTbsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("dried oregano", new BigDecimal(1), uomTsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("dried cumin", new BigDecimal(1), uomTsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("'sugar'", new BigDecimal(1), uomTsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("salt", new BigDecimal(0.5), uomTsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("clove garlic, finely chopped", new BigDecimal(1), uomNumber.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("finely grated orange zest", new BigDecimal(1), uomTsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("fresh-squeezed orange juice", new BigDecimal(3), uomTbsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("olive oil", new BigDecimal(2), uomTbsp.get(), tacoRecipe));
-        tacoRecipe.getIngredientSet().add(new Ingredient("skinless, boneless chicken thighs (1 1/4 pounds)", new BigDecimal(6), uomNumber.get(), tacoRecipe));
+//Changed all below to call the new addIngredients() which takes care of bidirectional relationship and makes this code simpler
+//        tacoRecipe.getIngredientSet().add(new Ingredient("ancho chili powder", new BigDecimal(2), uomTbsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("ancho chili powder", new BigDecimal(2), uomTbsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("dried oregano", new BigDecimal(1), uomTsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("dried cumin", new BigDecimal(1), uomTsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("'sugar'", new BigDecimal(1), uomTsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("salt", new BigDecimal(0.5), uomTsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("clove garlic, finely chopped", new BigDecimal(1), uomNumber.get()));
+        tacoRecipe.addIngredients(new Ingredient("finely grated orange zest", new BigDecimal(1), uomTsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("fresh-squeezed orange juice", new BigDecimal(3), uomTbsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("olive oil", new BigDecimal(2), uomTbsp.get()));
+        tacoRecipe.addIngredients(new Ingredient("skinless, boneless chicken thighs (1 1/4 pounds)", new BigDecimal(6), uomNumber.get()));
 
         tacoRecipe.getCategorySet().add(catgAmerican.get());
         tacoRecipe.getCategorySet().add(catgMexican.get());
 
-        tacoNotes.setRecipe(tacoRecipe);
+        //Below not needed after sorting out bidirectional save in Recipe
+//        tacoNotes.setRecipe(tacoRecipe);
 
         recipes.add(guacRecipe);
         recipes.add(tacoRecipe);
