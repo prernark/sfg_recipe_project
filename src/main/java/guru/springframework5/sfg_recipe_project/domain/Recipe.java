@@ -3,6 +3,7 @@ package guru.springframework5.sfg_recipe_project.domain;
 import guru.springframework5.sfg_recipe_project.enums.Difficulty;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,7 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private String directions;
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty;
@@ -26,14 +28,14 @@ public class Recipe {
     //Below,1 Recipe has many Ingredients and cascade to make Recipe the owner.
     //mappedBy => Recipe stored in Ingredients as property c/as 'recipe'
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredientSet;
+    private Set<Ingredient> ingredientSet = new HashSet<>();
     @OneToOne(cascade= CascadeType.ALL) //Each recipe has one note and set up a cascade by making recipe the owner of that.
     private Notes notes;
     @ManyToMany
     @JoinTable (name="recipe_category",
                 joinColumns = @JoinColumn (name="recipe_id"),
                 inverseJoinColumns = @JoinColumn(name="category_id"))
-    private Set<Category> categorySet;
+    private Set<Category> categorySet = new HashSet<>();
 
 
     public Long getId() {
