@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 
-    //Earlier Sping Data would return null but not it will return Optional type
+    //Earlier Spring Data would return null but now it will return Optional type
     Optional<Category> findByDescription(String description);
 }
