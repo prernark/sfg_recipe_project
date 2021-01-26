@@ -3,21 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Index for the Recipes</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Recipe Index</h1>
-    <div th:each="recipe:${recipes}">
-        <h2 th:text="${recipe.description}">description</h2>
-        <p  th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime </p>
-        <p  th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
-        <p  th:text="'Serves: '+${recipe.servings}">serves </p>
-        <p  th:text="'Source: '+${recipe.source}">source</p>
-        <p  th:text="'URL: '+${recipe.url}">url</p>
-        <p>INGREDIENTS</p>
-        <ul th:each="ingr:${recipe.ingredientSet}">
-            <li th:text="${(ingr.amount+' '+ingr.unitOfMeasure.description+' '+ingr.description)}">ingredients </li>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Recipe Index</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table class="table table-sub-heading-color table-hover">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="recipe:${recipes}">
+                                <td th:text="${recipe.id}">123</td>
+                                <td>
+                                    <p th:text="${recipe.description}">desc</p>
+                                    <p th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime</p>
+                                    <p  th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
+                                    <p  th:text="'Serves: '+${recipe.servings}">serves </p>
+                                    <p  th:text="'Source: '+${recipe.source}">source</p>
+                                    <p  th:text="'URL: '+${recipe.url}">url</p>
+                                    <p>INGREDIENTS</p>
+                                    <ul th:each="ingr:${recipe.ingredientSet}">
+                                        <li th:text="${(ingr.amount+' '+ingr.unitOfMeasure.description+' '+ingr.description)}">ingredients </li>
 
-        </ul>
+                                    </ul>
+                                </td>
+                            </tr>
+                                    <!--div th:each="recipe:${recipes}">
+                                        <h2 th:text="${recipe.description}">description</h2>
+                                        <p  th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime </p>
+                                        <p  th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
+                                        <p  th:text="'Serves: '+${recipe.servings}">serves </p>
+                                        <p  th:text="'Source: '+${recipe.source}">source</p>
+                                        <p  th:text="'URL: '+${recipe.url}">url</p>
+                                        <p>INGREDIENTS</p>
+                                        <ul th:each="ingr:${recipe.ingredientSet}">
+                                            <li th:text="${(ingr.amount+' '+ingr.unitOfMeasure.description+' '+ingr.description)}">ingredients </li>
+
+                                        </ul>
+                                    </div-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </body>
 </html>
