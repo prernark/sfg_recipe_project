@@ -1,8 +1,15 @@
 package guru.springframework5.sfg_recipe_project.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.util.Set;
 
+//@Setter
+//@Getter
+@Data //Lombok annotation @Data takes care of getters, setters, toString, EqualsAndHashCode,RequiredArgsConstructor
+@EqualsAndHashCode(exclude = {"recipeSet"}) //above gives error due to bidirectional mapping getting circular. Hence exclude recipe from hashcode() n it works
 @Entity
 public class Category {
 
@@ -15,27 +22,4 @@ public class Category {
     @ManyToMany(mappedBy = "categorySet")
     private Set<Recipe> recipeSet;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Recipe> getRecipeSet() {
-        return recipeSet;
-    }
-
-    public void setRecipeSet(Set<Recipe> recipeSet) {
-        this.recipeSet = recipeSet;
-    }
 }

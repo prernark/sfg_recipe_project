@@ -5,15 +5,18 @@ import guru.springframework5.sfg_recipe_project.enums.Difficulty;
 import guru.springframework5.sfg_recipe_project.repositories.CategoryRepository;
 import guru.springframework5.sfg_recipe_project.repositories.RecipeRepository;
 import guru.springframework5.sfg_recipe_project.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEvent> {
     private final CategoryRepository categoryRepository;
@@ -21,13 +24,16 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
     private final RecipeRepository recipeRepository;
 
     public RecipeBootStrap(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository, RecipeRepository recipeRepository) {
+        log.debug("RecipeBootStrap Constructor");
         this.categoryRepository = categoryRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
         this.recipeRepository = recipeRepository;
     }
 
     @Override
+    @Transactional //to avoid getting LazyInitializationException due to different transaction scope. We want same transactional context.
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("Saving recipes from list to db");
         recipeRepository.saveAll(getRecipes());
     }
 
@@ -36,6 +42,7 @@ public class RecipeBootStrap implements ApplicationListener<ContextRefreshedEven
 
         List<Recipe> recipes = new ArrayList<>();
 
+        log.debug("Loading recipes in the Recipe List");
         Optional<UnitOfMeasure> uomTsp = unitOfMeasureRepository.findByDescription("Teaspoon");
         Optional<UnitOfMeasure> uomTbsp = unitOfMeasureRepository.findByDescription("Tablespoon");
         Optional<UnitOfMeasure> uomCup = unitOfMeasureRepository.findByDescription("Cup");
