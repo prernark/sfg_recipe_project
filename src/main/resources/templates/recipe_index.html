@@ -41,14 +41,13 @@
                                 <td>
                                     <p th:text="${recipe.description}">desc</p>
                                     <p th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime</p>
-                                    <p  th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
-                                    <p  th:text="'Serves: '+${recipe.servings}">serves </p>
-                                    <p  th:text="'Source: '+${recipe.source}">source</p>
-                                    <p  th:text="'URL: '+${recipe.url}">url</p>
+                                    <p th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
+                                    <p th:text="'Serves: '+${recipe.servings}">serves </p>
+                                    <p th:text="'Source: '+${recipe.source}">source</p>
+                                    <p th:text="'URL: '+${recipe.url}">url</p>
                                     <p>INGREDIENTS</p>
                                     <ul th:each="ingr:${recipe.ingredientSet}">
                                         <li th:text="${(ingr.amount+' '+ingr.unitOfMeasure.description+' '+ingr.description)}">ingredients </li>
-
                                     </ul>
                                 </td>
                             </tr>
