@@ -39,7 +39,7 @@ jobs:
           key: sfg_recipe_project-{{ checksum "pom.xml" }}
 
       # run tests!
-      - run: mvn integration-test cobertura:cobertura
+      - run: mvn integration-test
 
       - store_test_results:
           path: target/surefire-reports
