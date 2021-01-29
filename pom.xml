@@ -52,6 +52,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 <!--Build Plugins-->
     <build>
@@ -86,7 +87,9 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
+
 
 </project>
