@@ -5,15 +5,15 @@ import guru.springframework5.sfg_recipe_project.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 class RecipeServiceImplTest {
     RecipeServiceImpl recipeService;
@@ -28,6 +28,20 @@ class RecipeServiceImplTest {
     }
 
     @Test
+    public void getRecipeById(){
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.ofNullable(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+        assertNotNull(recipeReturned);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
     public void getRecipes(){
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 0); //success
@@ -36,7 +50,7 @@ class RecipeServiceImplTest {
         Recipe recipe = new Recipe();
         Set<Recipe> recipeSet = new HashSet<>();
         recipeSet.add(recipe);
-        Mockito.when(recipeService.getRecipes()).thenReturn(recipeSet);
+        when(recipeService.getRecipes()).thenReturn(recipeSet);
         recipes = recipeService.getRecipes();
 
         assertEquals(recipes.size(), recipeSet.size()); //success
