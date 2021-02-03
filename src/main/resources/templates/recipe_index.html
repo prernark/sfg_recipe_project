@@ -57,7 +57,7 @@
 <!--                                        <li th:text="${(ingr.amount+' '+ingr.unitOfMeasure.description+' '+ingr.description)}">ingredients </li>-->
 <!--                                    </ul>-->
                                 </td>
-                                <td><a href="#" th:href="@{'recipe/show/'+${recipe.id}}">View</a></td>
+                                <td><a href="#" th:href="@{'recipe/'+${recipe.id}+'/show'}">View</a></td>
                             </tr>
                         </table>
                     </div>

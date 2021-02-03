@@ -17,7 +17,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping ("/recipe/show/{id}") //{id} is a variable which will take the id value from the URL
+    @RequestMapping ("/recipe/{id}/show") //{id} is a variable which will take the id value from the URL
     public String showRecipe(@PathVariable String id, Model model){ //The id var is a String but we will convert it to Long
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
         return "recipe/show";
@@ -34,10 +34,7 @@ public class RecipeController {
     @RequestMapping("/recipe/") //this string has to be the same as html entry th:action="@{/recipe/}"
     public String saveOrUpdateRecipe(@ModelAttribute RecipeCommand command){
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
-//        System.out.println("Saved id "+savedCommand.getId());
-//        String url = "redirect:/recipe/show/"+savedCommand.getId();
-//        System.out.println("URL "+url);
-        return "redirect:/recipe/show/"+savedCommand.getId();
+        return "redirect:/recipe/"+savedCommand.getId()+"/show";
     }
 
 }
