@@ -63,6 +63,19 @@ public class RecipeControllerTest {
     }
 
     @Test
+    public void getUpdateView() throws Exception {
+        RecipeCommand cmd = new RecipeCommand();
+        cmd.setId(LONG_ID);
+
+        when (recipeService.findRecipeCommandById(anyLong())).thenReturn(cmd);
+
+        mockMVC.perform(post("/recipe/1/update"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipeform"))
+                .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
     public void postNewRecipeForm() throws Exception {
         RecipeCommand cmd = new RecipeCommand();
         cmd.setId(LONG_ID);
