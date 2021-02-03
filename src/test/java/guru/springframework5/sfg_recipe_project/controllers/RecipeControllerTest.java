@@ -47,7 +47,7 @@ public class RecipeControllerTest {
         //when
         when(recipeService.findById(anyLong())).thenReturn(recipe);
 
-        mockMVC.perform(post("/recipe/show/1"))
+        mockMVC.perform(post("/recipe/1/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
@@ -75,7 +75,7 @@ public class RecipeControllerTest {
                .param("description", "some string")
              )
                .andExpect(status().is3xxRedirection())
-               .andExpect(view().name("redirect:/recipe/show/"+LONG_ID));
+               .andExpect(view().name("redirect:/recipe/"+LONG_ID+"/show"));
     }
 
 }
