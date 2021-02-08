@@ -47,18 +47,24 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     @Transactional
+    //When Submit is clicked on New or Update
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
         //recipe below is still a POJO and not a Hibernate obj so its detached from Hibernate context
         Recipe recipe = recipeCommandToRecipe.convert(command);
-
         Recipe savedRecipe = recipeRepository.save(recipe); //under the covers, if its new it will create else update
-        log.debug("Saved Recipe Id "+savedRecipe.getId());
+        log.debug("Saved Recipe Id " + savedRecipe.getId());
         return recipeToRecipeCommand.convert(savedRecipe);
+
     }
 
     @Override
     @Transactional
     public RecipeCommand findRecipeCommandById(Long id) {
         return recipeToRecipeCommand.convert(findById(id));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
     }
 }
