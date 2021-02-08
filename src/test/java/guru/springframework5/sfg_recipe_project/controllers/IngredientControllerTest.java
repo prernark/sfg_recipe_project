@@ -20,20 +20,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 public class IngredientControllerTest {
-    IngredientController ingredientController;
 
     @Mock
     RecipeService recipeService;
     @Mock
     IngredientService ingredientService;
 
+    IngredientController ingredientController;
     MockMvc mockMvc;
 
     @BeforeEach
     public void setUp(){
-        ingredientController = new IngredientController(recipeService, ingredientService);
-
         MockitoAnnotations.openMocks(this);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -61,7 +60,6 @@ public class IngredientControllerTest {
         cmd.setId(1L);
         //when
         when(ingredientService.findbyRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(cmd);
-
         //then
         mockMvc.perform(get("/recipe/1/ingredient/2/show"))
                .andExpect(status().isOk())

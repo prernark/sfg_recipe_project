@@ -33,8 +33,8 @@ class IngredientServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand);
         MockitoAnnotations.openMocks(this);
+        ingredientService = new IngredientServiceImpl(recipeRepository, ingredientToIngredientCommand);
     }
 
     @Test
@@ -58,6 +58,7 @@ class IngredientServiceImplTest {
 
         IngredientCommand cmd = new IngredientCommand();
         cmd.setId(3L);
+        cmd.setRecipeId(1L);
         when(ingredientToIngredientCommand.convert(any())).thenReturn(cmd);
 
         //when
