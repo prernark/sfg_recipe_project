@@ -1,12 +1,14 @@
 package guru.springframework5.sfg_recipe_project.services;
 
 import guru.springframework5.sfg_recipe_project.commands.IngredientCommand;
+import guru.springframework5.sfg_recipe_project.commands.UnitOfMeasureCommand;
 import guru.springframework5.sfg_recipe_project.converters.IngredientCommandToIngredient;
 import guru.springframework5.sfg_recipe_project.converters.IngredientToIngredientCommand;
 import guru.springframework5.sfg_recipe_project.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import guru.springframework5.sfg_recipe_project.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import guru.springframework5.sfg_recipe_project.domain.Ingredient;
 import guru.springframework5.sfg_recipe_project.domain.Recipe;
+import guru.springframework5.sfg_recipe_project.domain.UnitOfMeasure;
 import guru.springframework5.sfg_recipe_project.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -137,6 +140,47 @@ class IngredientServiceImplTest {
         verify(recipeRepository, times(1)).save(any());
         verify(recipeRepository, never()).saveAll(any());
         verify(ingredientToIngredientCommand, times(1)).convert(any());
+    }
 
+    @Test
+    public void saveNewIngredient(){
+        IngredientCommand cmd = new IngredientCommand();
+        cmd.setRecipeId(1L);
+        cmd.setAmount(BigDecimal.valueOf(12));
+        cmd.setDescription("Sugar");
+        UnitOfMeasureCommand uomCmd = new UnitOfMeasureCommand();
+        uomCmd.setId(1L);
+        cmd.setUnitOfMeasure(uomCmd);
+
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        recipe.setIngredientSet(new HashSet<>());
+        Optional<Recipe> recipeOp = Optional.of(recipe);
+
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(10L);
+        ingredient.setAmount(BigDecimal.valueOf(12));
+        ingredient.setDescription("Sugar");
+        UnitOfMeasure uom = new UnitOfMeasure();
+        uom.setId(1L);
+        ingredient.setUnitOfMeasure(uom);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOp);
+        when(ingredientCommandToIngredient.convert(any())).thenReturn(ingredient);
+        when(recipeRepository.save(any())).thenReturn(recipe);
+        when(ingredientToIngredientCommand.convert(any())).thenReturn(cmd);
+
+        //when
+        IngredientCommand savedCmd = ingredientService.saveIngredientCommand(cmd);
+
+        //then
+        assertNotNull(savedCmd);
+        assertNull(savedCmd.getId());
+        assertEquals(cmd.getRecipeId(), savedCmd.getRecipeId());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+        verify(recipeRepository, times(1)).save(any());
+        verify(ingredientToIngredientCommand, times(1)).convert(any());
+        verify(ingredientCommandToIngredient, times(1)).convert(any());
     }
 }

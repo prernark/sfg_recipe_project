@@ -82,10 +82,23 @@ public class IngredientServiceImpl implements IngredientService{
 
         Recipe recipeSaved = recipeRepository.save(recipe); //due to cascade will save ingredients as well
 
-        return ingredientToIngredientCommand.convert(recipeSaved.getIngredientSet()
-                                                                .stream()
-                                                                .filter(ingredient -> ingredient.getId().equals(cmd.getId()))
-                                                                .findFirst()
-                                                                .get());
+//        return ingredientToIngredientCommand.convert(recipeSaved.getIngredientSet()
+//                                                                .stream()
+//                                                                .filter(ingredient -> ingredient.getId().equals(cmd.getId()))
+//                                                                .findFirst()
+//                                                                .get());
+        Optional<Ingredient> savedIngredientOp = recipeSaved.getIngredientSet()
+                                                         .stream()
+                                                         .filter(ingredient -> ingredient.getId().equals(cmd.getId()))
+                                                         .findFirst();
+        if (savedIngredientOp.isEmpty()){ //this will happen if adding new ingredient as cmd.getId() will be null
+            savedIngredientOp = recipeSaved.getIngredientSet()
+                   .stream()
+                   .filter(ingredient -> ingredient.getAmount().equals(cmd.getAmount()))
+                   .filter(ingredient -> ingredient.getDescription().equalsIgnoreCase(cmd.getDescription()))
+                   .filter(ingredient -> ingredient.getUnitOfMeasure().getId().equals(cmd.getUnitOfMeasure().getId()))
+                   .findFirst();
+        }
+        return ingredientToIngredientCommand.convert(savedIngredientOp.get());
     }
 }

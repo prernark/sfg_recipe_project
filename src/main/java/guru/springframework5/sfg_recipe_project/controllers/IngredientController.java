@@ -1,6 +1,7 @@
 package guru.springframework5.sfg_recipe_project.controllers;
 
 import guru.springframework5.sfg_recipe_project.commands.IngredientCommand;
+import guru.springframework5.sfg_recipe_project.commands.UnitOfMeasureCommand;
 import guru.springframework5.sfg_recipe_project.services.IngredientService;
 import guru.springframework5.sfg_recipe_project.services.RecipeService;
 import guru.springframework5.sfg_recipe_project.services.UnitOfMeasureService;
@@ -48,6 +49,20 @@ public class IngredientController {
         model.addAttribute("ingredient",
                             ingredientService.findbyRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
         model.addAttribute("uomList", unitOfMeasureService.findAll());
+        return "recipe/ingredient/editIngredientForm";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new") //open the edit Ingredient form in NEW mode
+    public String openNewIngredientForm(@PathVariable String recipeId, Model model){
+        log.debug("Opening a new ingredient for recipe "+recipeId+" in New mode");
+        IngredientCommand cmd = new IngredientCommand();
+        cmd.setRecipeId(Long.valueOf(recipeId));
+        cmd.setUnitOfMeasure(new UnitOfMeasureCommand());
+
+        model.addAttribute("ingredient", cmd);
+        model.addAttribute("uomList", unitOfMeasureService.findAll());
+
         return "recipe/ingredient/editIngredientForm";
     }
 
