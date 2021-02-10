@@ -4,7 +4,7 @@ import guru.springframework5.sfg_recipe_project.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Slf4j
 @Controller
@@ -15,7 +15,7 @@ public class RecipeIndexController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping ({"recipe", "", "/", "index"})
+    @GetMapping({"recipe", "", "/", "index"})
     public String listOfRecipes(Model model){
         log.debug("In RecipeIndexController RequestMapping method");
         model.addAttribute("recipes", recipeService.getRecipes());
