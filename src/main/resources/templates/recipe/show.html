@@ -35,13 +35,21 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-1">
                                 <h5>Categories:</h5>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-4">
                                 <ul th:each="catg:${recipe.categorySet}">
                                     <li th:text="${catg.description}">Category One</li>
                                 </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="../../static/images/guacamole400x400WithX.jpg"
+                                     th:src="@{/images/guacamole400x400WithX.jpg}" width="200" height="200">
+                            </div>
+                            <div class="col-md-1">
+                                <a class="btn btn-default" role="button" href="#"
+                                                       th:href="@{'/recipe/'+${recipe.id}+'/changeimage'}">Change Image</a>
                             </div>
                         </div>
                         <div class="row">
@@ -50,9 +58,6 @@
                             </div>
                             <div class="col-md-4">
                                 <h5 th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime</h5>
-                            </div>
-                            <div class="col-md-4">
-                                <h5 th:text="'Serves: '+${recipe.servings}">serves</h5>
                             </div>
                         </div>
                         <div class="row">
@@ -64,7 +69,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
+                                <h5 th:text="'Serves: '+${recipe.servings}">serves</h5>
+                            </div>
+                            <div class="col-md-8">
                                 <h5 th:text="'URL: '+${recipe.url}">url</h5>
                             </div>
                         </div>
