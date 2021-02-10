@@ -44,12 +44,35 @@
                                 </ul>
                             </div>
                         </div>
-                        <div>
-                            <p th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime</p>
-                            <p th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>
-                            <p th:text="'Serves: '+${recipe.servings}">serves </p>
-                            <p th:text="'Source: '+${recipe.source}">source</p>
-                            <p th:text="'URL: '+${recipe.url}">url</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 th:text="'Serves: '+${recipe.servings}">serves</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 th:text="'Source: '+${recipe.source}">source</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 th:text="'Difficulty: '+${recipe.difficulty}">difficulty</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 th:text="'URL: '+${recipe.url}">url</h5>
+                            </div>
+                        </div>
+<!--                            <p th:text="'Prep Time: '+${recipe.prepTime}+' minutes'">preptime</p>-->
+<!--                            <p th:text="'Cook Time: '+${recipe.cookTime}+' minutes'">cooktime </p>-->
+<!--                            <p th:text="'Serves: '+${recipe.servings}">serves </p>-->
+<!--                            <p th:text="'Source: '+${recipe.source}">source</p>-->
+<!--                            <p th:text="'URL: '+${recipe.url}">url</p>-->
                             <div class="panel panel-primary">
                                 <div class="panel panel-heading">
                                     <div class="row">
