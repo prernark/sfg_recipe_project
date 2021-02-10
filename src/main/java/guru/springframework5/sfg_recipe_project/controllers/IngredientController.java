@@ -67,10 +67,17 @@ public class IngredientController {
     }
 
     @PostMapping
-    @RequestMapping("/recipe/{recipeId}/ingredient") //UPDATE THE PARTICULAR INGREDIENT
+    @RequestMapping("/recipe/{recipeId}/ingredient") //CREATE OR UPDATE THE PARTICULAR INGREDIENT
     public String saveOrUpdateIngredient(@ModelAttribute IngredientCommand cmd, @PathVariable String recipeId ){
         log.debug("Updating Ingredient for Recipe "+recipeId);
         IngredientCommand savedCmd = ingredientService.saveIngredientCommand(cmd);
         return "redirect:/recipe/"+savedCmd.getRecipeId()+"/ingredient/"+savedCmd.getId()+"/show";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/{id}/delete")
+    public String deleteIngredient(@PathVariable String recipeId, @PathVariable String id){
+        ingredientService.deleteIngredientById(Long.valueOf(recipeId), Long.valueOf(id));
+        return "redirect:/recipe/"+recipeId+"/ingredients";
     }
 }

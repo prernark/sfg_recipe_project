@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -91,7 +93,7 @@ public class IngredientServiceImpl implements IngredientService{
                                                          .stream()
                                                          .filter(ingredient -> ingredient.getId().equals(cmd.getId()))
                                                          .findFirst();
-        if (savedIngredientOp.isEmpty()){ //this will happen if adding new ingredient as cmd.getId() will be null
+        if (savedIngredientOp.isEmpty()){ //this will happen when adding new ingredient, as cmd.getId() will be null
             savedIngredientOp = recipeSaved.getIngredientSet()
                    .stream()
                    .filter(ingredient -> ingredient.getAmount().equals(cmd.getAmount()))
@@ -100,5 +102,30 @@ public class IngredientServiceImpl implements IngredientService{
                    .findFirst();
         }
         return ingredientToIngredientCommand.convert(savedIngredientOp.get());
+    }
+
+    @Override
+    @Transactional
+    public void deleteIngredientById(Long recipeId, Long ingredientId){
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if(recipeOptional.isEmpty()){
+            log.error("Recipe not found");
+        }
+        Recipe recipe = recipeOptional.get();
+        Set<Ingredient> ingredients = new HashSet<>();
+        Optional<Ingredient> ingredientOptional = recipe.getIngredientSet()
+                                                        .stream()
+                                                        .filter(ingredient -> ingredient.getId().equals(ingredientId))
+                                                        .findFirst();
+        if(ingredientOptional.isEmpty()){
+            log.info("Ingredient "+ingredientId+" not found. Nothing to delete");
+        }
+        else{
+            log.info("Ingredient "+ingredientId+" for recipe "+recipeId+" found");
+            Ingredient ingredient = ingredientOptional.get();
+            ingredient.setRecipe(null);
+            recipe.getIngredientSet().remove(ingredient);
+            recipeRepository.save(recipe);
+        }
     }
 }
