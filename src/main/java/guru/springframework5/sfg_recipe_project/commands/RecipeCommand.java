@@ -21,7 +21,7 @@ public class RecipeCommand {
     private String url;
     private String directions;
     private Difficulty difficulty;
-//    private Byte[] image; //JT IS not setting this
+    private Byte[] image;
     private Set<IngredientCommand> ingredientSet = new HashSet<>();
     private NotesCommand notes;
     private Set<CategoryCommand> categorySet = new HashSet<>();

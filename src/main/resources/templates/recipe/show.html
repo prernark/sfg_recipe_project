@@ -45,11 +45,11 @@
                             </div>
                             <div class="col-md-4">
                                 <img src="../../static/images/guacamole400x400WithX.jpg"
-                                     th:src="@{/images/guacamole400x400WithX.jpg}" width="200" height="200">
+                                     th:src="@{'/recipe/' + ${recipe.id} + '/renderImage'}" width="200" height="200">
                             </div>
                             <div class="col-md-1">
                                 <a class="btn btn-default" role="button" href="#"
-                                                       th:href="@{'/recipe/'+${recipe.id}+'/changeimage'}">Change Image</a>
+                                   th:href="@{'/recipe/'+${recipe.id}+'/changeimage'}">Change Image</a>
                             </div>
                         </div>
                         <div class="row">
